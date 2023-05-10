@@ -25,3 +25,4 @@ They can also be used standalone.
 | [Waher.IoTGateway](https://www.nuget.org/packages/Waher.IoTGateway/)                               | Contains the [IoT Gateway](https://github.com/PeterWaher/IoTGateway) hosting environment. |
 | [Waher.Persistence](https://www.nuget.org/packages/Waher.Persistence/)                             | Abstraction layer for object databases. |
 | [Waher.Runtime.Inventory](https://www.nuget.org/packages/Waher.Runtime.Inventory/)                 | Maintains an inventory of type definitions in the runtime environment, and permits easy instantiation of suitable classes, and inversion of control (IoC). |
+| [Waher.Runtime.Threading](https://www.nuget.org/packages/Waher.Runtime.Threading/)                 | Provides tools for managing objects in a multi-user, multi-threaded environment. |
