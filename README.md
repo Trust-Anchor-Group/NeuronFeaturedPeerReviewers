@@ -60,6 +60,11 @@ solution is run with it.
 You configure the service via the browser, by navigating to the `/FeaturedPeerReviewers/Settings.md` resource. There you will be
 able to access the list of approved peer reviewers, as well as the peer reviewers that have applied to become featured reviewers.
 
+A peer reviewer can apply to become a featured peer reviewer. Such an application can be registered navigating to the
+`/FeaturedPeerReviewers/Apply.md` resource on the Neuron(R). To remove an application, or a featured peer reviewer, the
+operator can either go to the `/FeaturedPeerReviewers/Settings.md` resource, or the user go to the 
+`/FeaturedPeerReviewers/SettingRemove.md` resource.
+
 ### Gateway.config
 
 To simplify development, once the project is cloned, add a `FileFolder` reference

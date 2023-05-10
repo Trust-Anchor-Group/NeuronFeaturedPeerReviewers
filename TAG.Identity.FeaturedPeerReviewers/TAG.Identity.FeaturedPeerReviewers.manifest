@@ -3,6 +3,8 @@
 	<Assembly fileName="TAG.Identity.FeaturedPeerReviewers.dll"/>
 	<Folder name="Root">
 		<Folder name="FeaturedPeerReviewers">
+			<Content fileName="Apply.md"/>
+			<Content fileName="Remove.md"/>
 			<Content fileName="Settings.md"/>
 		</Folder>
 	</Folder>
