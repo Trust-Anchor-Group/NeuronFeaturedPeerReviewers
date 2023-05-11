@@ -4,9 +4,9 @@
 	<Folder name="Root">
 		<Folder name="FeaturedPeerReviewers">
 			<Content fileName="Apply.md"/>
+			<Content fileName="DeleteApplication.ws"/>
 			<Content fileName="PrepareApplication.ws"/>
 			<Content fileName="QuickLogin.js"/>
-			<Content fileName="Remove.md"/>
 			<Content fileName="Settings.md"/>
 		</Folder>
 	</Folder>

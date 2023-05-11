@@ -1,11 +1,12 @@
-﻿if !exists(QuickLoginUser) then BadRequest("You need to scan code first.");
+﻿AuthenticateSession(Request,"QuickLoginUser");
+
 if QuickLoginUser.State != Waher.Networking.XMPP.Contracts.IdentityState.Approved then BadRequest("Identity not approved.");
 if QuickLoginUser.From>Now then BadRequest("Identity will only be valid for use after "+Str(QuickLoginUser.From));
 if QuickLoginUser.To<Now then BadRequest("Identity is not valid for use after "+Str(QuickLoginUser.To));
 
 Application:=select top 1 * from TAG.Identity.FeaturedPeerReviewers.FeaturedPeerReviewer where LegalId=QuickLoginUser.Id;
 if exists(Application) then
-	SeeOther("Remove.md");
+	SeeOther("Apply.md");
 
 Application:=Create(TAG.Identity.FeaturedPeerReviewers.FeaturedPeerReviewer);
 Application.LegalId:=QuickLoginUser.Id;
@@ -23,6 +24,12 @@ Application.City:=(QuickLoginUser.Properties.CITY ??? "");
 Application.Area:=(QuickLoginUser.Properties.AREA ??? "");
 Application.Zip:=(QuickLoginUser.Properties.ZIP ??? "");
 Application.Address:=(QuickLoginUser.Properties.ADDR ??? "");
+Application.UseCountry:=!empty(Application.Country);
+Application.UseRegion:=!empty(Application.Region);
+Application.UseCity:=!empty(Application.City);
+Application.UseArea:=!empty(Application.Area);
+Application.UseZip:=!empty(Application.Zip);
+Application.UseAddress:=!empty(Application.Address);
 Application.EMail:=(QuickLoginUser.Properties.EMAIL ??? "");
 Application.PhoneNumber:=(QuickLoginUser.Properties.PHONE ??? "");
 Application.Jid:=(QuickLoginUser.Properties.JID ??? "");
@@ -56,6 +63,12 @@ SaveNewObject(Application);
 	"to": Application.To,
 	"approvedForPublication": Application.ApprovedForPublication,
 	"fullName": Application.FullName,
+	"useCountry": Application.UseCountry,
+	"useRegion": Application.UseRegion,
+	"useCity": Application.UseCity,
+	"useArea": Application.UseArea,
+	"useZip": Application.UseZip,
+	"useAddress": Application.UseAddress,
 	"country": Application.Country,
 	"region": Application.Region,
 	"city": Application.City,

@@ -126,7 +126,7 @@ function SignatureReceivedBE(Empty)
 				ApplicationPrepared(Div,JSON.parse(xhttp.responseText));
 			}
 			else if (xhttp.status === 406)
-				window.location.href = "Remove.md";
+				window.location.reload();
 			else
 				window.alert(xhttp.responseText + " (" + xhttp.status + ")");
 
@@ -142,11 +142,7 @@ function SignatureReceivedBE(Empty)
 
 function ApplicationPrepared(Div,Application)
 {
-	var H2 = document.createElement("H2");
-	Div.appendChild(H2);
-	H2.innerText = "Application created.";
-
-	var TBody = AddTable(Div, "Identity of reviewer");
+	var TBody = AddTable(Div, "Featured Peer Review application");
 
 	AddRow(TBody, "Id", Application.legalId, true);
 	AddRow(TBody, "Provider", Application.provider, true);
@@ -159,12 +155,12 @@ function ApplicationPrepared(Div,Application)
 	AddRow(TBody, "From", new Date(1000 * Application.from), false);
 	AddRow(TBody, "To", new Date(1000 * Application.to), false);
 	AddRow(TBody, "Full Name", Application.fullName, false);
-	AddRow(TBody, "Country", Application.country, false);
-	AddRow(TBody, "Region", Application.region, false);
-	AddRow(TBody, "City", Application.city, false);
-	AddRow(TBody, "Area", Application.area, false);
-	AddRow(TBody, "Postal Code", Application.zip, false);
-	AddRow(TBody, "Address", Application.address, false);
+	AddCheckbox(AddRow(TBody, "Country", Application.country, false), Application.useCountry, "UseCountry");
+	AddCheckbox(AddRow(TBody, "Region", Application.region, false), Application.useRegion, "UseRegion");
+	AddCheckbox(AddRow(TBody, "City", Application.city, false), Application.useCity, "UseCity");
+	AddCheckbox(AddRow(TBody, "Area", Application.area, false), Application.useArea, "UseArea");
+	AddCheckbox(AddRow(TBody, "Postal Code", Application.zip, false), Application.useZip, "UseZip");
+	AddCheckbox(AddRow(TBody, "Address", Application.address, false), Application.useAddress, "UseAddress");
 	AddRow(TBody, "e-Mail", Application.eMail, false);
 	AddRow(TBody, "Phone Number", Application.phoneNumber, false);
 	AddRow(TBody, "JID", Application.jid, false);
@@ -183,6 +179,17 @@ function ApplicationPrepared(Div,Application)
 	Img.setAttribute("width", Application.photoWidth);
 	Img.setAttribute("height", Application.photoHeight);
 	Td.appendChild(Img);
+
+	var Tr = document.createElement("TR");
+	TBody.appendChild(Tr);
+
+	var Td = document.createElement("TD");
+	Td.setAttribute("colspan", "2");
+	Td.setAttribute("style", "text-align:center");
+	Tr.appendChild(Td);
+
+	Td.innerHTML = "<button type='submit' class='posButton'>Update</button> " +
+		"<button type='button' class='negButton' onclick='DeleteApplication()'>Delete</button>";
 }
 
 function AddTable(Div, Title)
@@ -227,6 +234,42 @@ function AddRow(TBody, Name, Value, Code)
 	}
 	else
 		Td.innerText = Value;
+
+	return Td;
+}
+
+function AddCheckbox(Td, Checked, Name)
+{
+	var s = "<input type='checkbox' id='" + Name + "' name='" + Name + "'";
+	if (Checked)
+		s += " checked";
+
+	s += "/><label for='" + Name + "'>Only review applications for " + Td.innerText + ".</label>";
+
+	Td.innerHTML = s;
+}
+
+function DeleteApplication()
+{
+	if (!window.confirm("Are you sure you want to delete your application?"))
+		return;
+
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function ()
+	{
+		if (xhttp.readyState === 4)
+		{
+			if (xhttp.status === 200)
+				window.location.reload();
+			else
+				ShowError(xhttp);
+		};
+	}
+
+	xhttp.open("POST", "DeleteApplication.ws", true);
+	xhttp.setRequestHeader("Content-Type", "text/plain");
+	xhttp.setRequestHeader("Accept", "application/json");
+	xhttp.send("");
 }
 
 var LoginTimer = window.setTimeout(function () { DisplayQuickLogin(); }, 100);

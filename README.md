@@ -61,9 +61,7 @@ You configure the service via the browser, by navigating to the `/FeaturedPeerRe
 able to access the list of approved peer reviewers, as well as the peer reviewers that have applied to become featured reviewers.
 
 A peer reviewer can apply to become a featured peer reviewer. Such an application can be registered navigating to the
-`/FeaturedPeerReviewers/Apply.md` resource on the Neuron(R). To remove an application, or a featured peer reviewer, the
-operator can either go to the `/FeaturedPeerReviewers/Settings.md` resource, or the user go to the 
-`/FeaturedPeerReviewers/SettingRemove.md` resource.
+`/FeaturedPeerReviewers/Apply.md` resource on the Neuron(R). They can edit and remove their application from the same resource.
 
 ### Gateway.config
 

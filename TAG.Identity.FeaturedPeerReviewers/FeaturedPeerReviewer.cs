@@ -91,6 +91,36 @@ namespace TAG.Identity.FeaturedPeerReviewers
 		public int PhotoHeight { get; set; }
 
 		/// <summary>
+		/// If Country limitation of reviewer should be used.
+		/// </summary>
+		public bool UseCountry { get; set; }
+
+		/// <summary>
+		/// If Region limitation of reviewer should be used.
+		/// </summary>
+		public bool UseRegion { get; set; }
+
+		/// <summary>
+		/// If City limitation of reviewer should be used.
+		/// </summary>
+		public bool UseCity { get; set; }
+
+		/// <summary>
+		/// If Area limitation of reviewer should be used.
+		/// </summary>
+		public bool UseArea { get; set; }
+
+		/// <summary>
+		/// If Zip limitation of reviewer should be used.
+		/// </summary>
+		public bool UseZip { get; set; }
+
+		/// <summary>
+		/// If Address limitation of reviewer should be used.
+		/// </summary>
+		public bool UseAddress { get; set; }
+
+		/// <summary>
 		/// Country limitation of reviewer
 		/// </summary>
 		public CaseInsensitiveString Country { get; set; }

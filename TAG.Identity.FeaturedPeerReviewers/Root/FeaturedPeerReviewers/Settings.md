@@ -14,4 +14,3 @@ Featured Peer Reviewers
 --------------------------
 
 * [Apply to become a featured peer reviewer](Apply.md)
-* [Remove yourself as featured peer reviewer](Remove.md)
