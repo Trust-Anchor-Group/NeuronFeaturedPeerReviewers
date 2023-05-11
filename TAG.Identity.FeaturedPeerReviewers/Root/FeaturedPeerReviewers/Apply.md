@@ -4,6 +4,10 @@ Author: Peter Waher
 Date: 2023-05-10
 Master: /Master.md
 Cache-Control: max-age=0, no-cache, no-store
+Javascript: /Events.js
+Javascript: QuickLogin.js
+CSS: /QuickLogin.css
+Neuron: {{Domain:=Waher.IoTGateway.Gateway.Domain}}
 
 ========================================================================
 
@@ -23,3 +27,7 @@ review from you, you will receive a push notification in your app.
 **Note**: Your photo will become publicly available to new users, together with your name and the information about the location
 you provide peer review services. You can at any time, [remove](Remove.md) your identity from the list of featured peer reviewers.
 
+**Note 2**: If you already have an application made, you will need to remove it first, before you can re-apply.
+
+<div id="quickLoginCode" data-mode="image" data-serviceId="{{QuickLoginServiceId(Request)}}"
+     data-purpose="To apply to become a featured peer reviewer on {{Domain}}."></div>

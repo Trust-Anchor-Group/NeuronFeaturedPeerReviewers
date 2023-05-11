@@ -1,4 +1,5 @@
-﻿using Waher.Persistence;
+﻿using System;
+using Waher.Persistence;
 using Waher.Persistence.Attributes;
 
 namespace TAG.Identity.FeaturedPeerReviewers
@@ -28,6 +29,36 @@ namespace TAG.Identity.FeaturedPeerReviewers
 		/// Legal ID of peer reviewer
 		/// </summary>
 		public CaseInsensitiveString LegalId { get; set; }
+
+		/// <summary>
+		/// Trust Provider of Legal ID of peer reviewer
+		/// </summary>
+		public CaseInsensitiveString Provider { get; set; }
+
+		/// <summary>
+		/// State of identity, at time of application.
+		/// </summary>
+		public Waher.Networking.XMPP.Contracts.IdentityState State { get; set; }
+
+		/// <summary>
+		/// When ID was created
+		/// </summary>
+		public DateTime Created { get; set; }
+
+		/// <summary>
+		/// When ID was updated
+		/// </summary>
+		public DateTime Updated { get; set; }
+
+		/// <summary>
+		/// From when ID is approved
+		/// </summary>
+		public DateTime From { get; set; }
+
+		/// <summary>
+		/// To when ID is approved
+		/// </summary>
+		public DateTime To { get; set; }
 
 		/// <summary>
 		/// If peer reviewer has been approved for publication.
@@ -83,5 +114,25 @@ namespace TAG.Identity.FeaturedPeerReviewers
 		/// Zip limitation of reviewer
 		/// </summary>
 		public CaseInsensitiveString Zip { get; set; }
+
+		/// <summary>
+		/// Address limitation of reviewer
+		/// </summary>
+		public CaseInsensitiveString Address { get; set; }
+
+		/// <summary>
+		/// E-mail to reviewer
+		/// </summary>
+		public CaseInsensitiveString EMail { get; set; }
+
+		/// <summary>
+		/// Phone Number to reviewer
+		/// </summary>
+		public CaseInsensitiveString PhoneNumber { get; set; }
+
+		/// <summary>
+		/// XMPP Address to reviewer
+		/// </summary>
+		public CaseInsensitiveString Jid { get; set; }
 	}
 }

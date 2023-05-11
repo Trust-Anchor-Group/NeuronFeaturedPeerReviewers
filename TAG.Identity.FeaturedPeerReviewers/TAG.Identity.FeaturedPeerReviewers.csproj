@@ -5,11 +5,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Root\FeaturedPeerReviewers\Apply.md" />
+    <None Remove="Root\FeaturedPeerReviewers\PrepareApplication.ws" />
+    <None Remove="Root\FeaturedPeerReviewers\QuickLogin.js" />
+    <None Remove="Root\FeaturedPeerReviewers\Remove.md" />
     <None Remove="Root\FeaturedPeerReviewers\Settings.md" />
     <None Remove="TAG.Identity.FeaturedPeerReviewers.manifest" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Root\FeaturedPeerReviewers\PrepareApplication.ws">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Root\FeaturedPeerReviewers\QuickLogin.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Root\FeaturedPeerReviewers\Remove.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Root\FeaturedPeerReviewers\Apply.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Root\FeaturedPeerReviewers\Settings.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -25,6 +41,10 @@
     <PackageReference Include="Waher.Persistence" Version="1.9.0" />
     <PackageReference Include="Waher.Runtime.Inventory" Version="1.1.3" />
     <PackageReference Include="Waher.Runtime.Threading" Version="1.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Root\FeaturedPeerReviewers\Images\" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
