@@ -53,6 +53,7 @@ Application.PhotoWidth:=Avatar.Width;
 Application.PhotoHeight:=Avatar.Height;
 
 SaveNewObject(Application);
+TAG.Identity.FeaturedPeerReviewers.ApplicationUpdated(Application);
 
 Waher.IoTGateway.Gateway.SendNotification("New [application for featured peer reviewer]("+
 	 Waher.IoTGateway.Gateway.GetUrl("/FeaturedPeerReviewers/Settings.md")+") received from **"+

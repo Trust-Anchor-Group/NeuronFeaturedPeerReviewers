@@ -4,6 +4,7 @@ Application:=select top 1 * from TAG.Identity.FeaturedPeerReviewers.FeaturedPeer
 if !exists(Application) then BadRequest("No application to delete.");
 
 DeleteObject(Application);
+TAG.Identity.FeaturedPeerReviewers.ApplicationDeleted(Application.LegalId);
 
 if System.IO.File.Exists(Application.PhotoFileName) then
 	System.IO.File.Delete(Application.PhotoFileName);

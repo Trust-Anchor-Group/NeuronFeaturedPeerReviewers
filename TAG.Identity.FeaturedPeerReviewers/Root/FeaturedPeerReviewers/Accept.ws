@@ -6,6 +6,7 @@ if !exists(Application) then NotFound("Application not found.");
 
 Application.ApprovedForPublication:=true;
 UpdateObject(Application);
+TAG.Identity.FeaturedPeerReviewers.ApplicationUpdated(Application);
 
 LogInformation("Application for featured peer reviewer accepted.",
 {
