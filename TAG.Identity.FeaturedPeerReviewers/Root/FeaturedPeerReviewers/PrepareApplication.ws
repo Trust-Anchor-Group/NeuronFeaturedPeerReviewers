@@ -33,6 +33,7 @@ Application.UseAddress:=!empty(Application.Address);
 Application.EMail:=(QuickLoginUser.Properties.EMAIL ??? "");
 Application.PhoneNumber:=(QuickLoginUser.Properties.PHONE ??? "");
 Application.Jid:=(QuickLoginUser.Properties.JID ??? "");
+Application.Description:="";
 
 AvatarUrl:=Waher.IoTGateway.Gateway.GetUrl(QuickLoginUser.AvatarUrl)+"?Width=128&Height=128";
 Avatar:=Get(AvatarUrl);
@@ -52,6 +53,10 @@ Application.PhotoWidth:=Avatar.Width;
 Application.PhotoHeight:=Avatar.Height;
 
 SaveNewObject(Application);
+
+Waher.IoTGateway.Gateway.SendNotification("New [application for featured peer reviewer]("+
+	 Waher.IoTGateway.Gateway.GetUrl("/FeaturedPeerReviewers/Settings.md")+") received from **"+
+	 Application.FullName+"**, **"+Application.Description+"**.");
 
 {
 	"legalId": Application.LegalId,

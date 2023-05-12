@@ -5,15 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Root\FeaturedPeerReviewers\Accept.ws" />
     <None Remove="Root\FeaturedPeerReviewers\Apply.md" />
     <None Remove="Root\FeaturedPeerReviewers\DeleteApplication.ws" />
     <None Remove="Root\FeaturedPeerReviewers\PrepareApplication.ws" />
     <None Remove="Root\FeaturedPeerReviewers\QuickLogin.js" />
+    <None Remove="Root\FeaturedPeerReviewers\Reject.ws" />
+    <None Remove="Root\FeaturedPeerReviewers\Settings.js" />
     <None Remove="Root\FeaturedPeerReviewers\Settings.md" />
     <None Remove="TAG.Identity.FeaturedPeerReviewers.manifest" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Root\FeaturedPeerReviewers\Accept.ws">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Root\FeaturedPeerReviewers\DeleteApplication.ws">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -24,6 +30,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Root\FeaturedPeerReviewers\Apply.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Root\FeaturedPeerReviewers\Reject.ws">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Root\FeaturedPeerReviewers\Settings.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Root\FeaturedPeerReviewers\Settings.md">

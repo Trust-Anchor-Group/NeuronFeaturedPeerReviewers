@@ -10,6 +10,7 @@ namespace TAG.Identity.FeaturedPeerReviewers
 	[CollectionName("FeaturedPeerReviewers")]
 	[TypeName(TypeNameSerialization.None)]
 	[Index("LegalId")]
+	[Index("ApprovedForPublication", "FullName")]
 	public class FeaturedPeerReviewer
 	{
 		/// <summary>

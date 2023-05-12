@@ -51,7 +51,9 @@ if exists(QuickLoginUser.Id) then
         Application.UseAddress:=Boolean(Posted.UseAddress ?? false);
         Application.Description:=Posted.Description;
 
-        UpdateObject(Application)
+        UpdateObject(Application);
+
+        SeeOther("Apply.md");
     );
 
     ]]

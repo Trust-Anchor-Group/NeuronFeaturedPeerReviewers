@@ -3,10 +3,13 @@
 	<Assembly fileName="TAG.Identity.FeaturedPeerReviewers.dll"/>
 	<Folder name="Root">
 		<Folder name="FeaturedPeerReviewers">
+			<Content fileName="Accept.ws"/>
 			<Content fileName="Apply.md"/>
 			<Content fileName="DeleteApplication.ws"/>
 			<Content fileName="PrepareApplication.ws"/>
 			<Content fileName="QuickLogin.js"/>
+			<Content fileName="Reject.ws"/>
+			<Content fileName="Settings.js"/>
 			<Content fileName="Settings.md"/>
 		</Folder>
 	</Folder>

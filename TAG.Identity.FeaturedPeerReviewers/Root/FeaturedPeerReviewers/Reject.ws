@@ -1,17 +1,18 @@
-﻿AuthenticateSession(Request,"QuickLoginUser");
+﻿AuthenticateSession(Request,"User");
+Authorize(User,"Admin.Identity.FeaturedPeerReviewers");
 
-Application:=select top 1 * from TAG.Identity.FeaturedPeerReviewers.FeaturedPeerReviewer where LegalId=QuickLoginUser.Id;
-if !exists(Application) then BadRequest("No application to delete.");
+Application:=select top 1 * from TAG.Identity.FeaturedPeerReviewers.FeaturedPeerReviewer where LegalId=Posted;
+if !exists(Application) then NotFound("Application not found.");
 
 DeleteObject(Application);
 
 if System.IO.File.Exists(Application.PhotoFileName) then
 	System.IO.File.Delete(Application.PhotoFileName);
 
-LogInformation("Application for featured peer reviewer deleted by applicant.",
+LogInformation("Application for featured peer reviewer rejected.",
 {
 	"Object":Application.LegalId,
-	"Actor":QuickLoginUser.UserName,
+	"Actor":User.UserName,
 	"LegalId": Application.LegalId,
 	"Provider": Application.Provider,
 	"State": Application.State,
@@ -28,6 +29,4 @@ LogInformation("Application for featured peer reviewer deleted by applicant.",
 	"Description": Application.Description
 });
 
-QuickLoginUser:=null;
-
-true
+true;

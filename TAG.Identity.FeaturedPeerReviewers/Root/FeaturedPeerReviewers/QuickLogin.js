@@ -91,9 +91,7 @@
 		};
 	}
 
-	var Uri = window.location.protocol + "//" + FindNeuronDomain() + "/QuickLogin";
-
-	xhttp.open("POST", Uri, true);
+	xhttp.open("POST", "/QuickLogin", true);
 	xhttp.setRequestHeader("Content-Type", "application/json");
 	xhttp.send(JSON.stringify(
 		{
