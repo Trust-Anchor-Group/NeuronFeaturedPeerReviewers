@@ -27,6 +27,8 @@ LogInformation("Application for featured peer reviewer accepted.",
 	"Description": Application.Description
 });
 
+PushEvent("/FeaturedPeerReviewers/Apply.md","ApplicationUpdated",Application.LegalId);
+
 {
 	"legalId": Application.LegalId,
 	"provider": Application.Provider,

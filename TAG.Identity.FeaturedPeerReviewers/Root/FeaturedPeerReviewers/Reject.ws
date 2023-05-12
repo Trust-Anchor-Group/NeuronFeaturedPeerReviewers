@@ -29,4 +29,6 @@ LogInformation("Application for featured peer reviewer rejected.",
 	"Description": Application.Description
 });
 
+PushEvent("/FeaturedPeerReviewers/Apply.md","ApplicationUpdated",Application.LegalId);
+
 true;

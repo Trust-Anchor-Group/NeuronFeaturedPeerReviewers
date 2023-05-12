@@ -8,6 +8,7 @@ UserVariable: User
 Privilege: Admin.Identity.FeaturedPeerReviewers
 Login: /Login.md
 Javascript: Settings.js
+Javascript: /Events.js
 
 ========================================================================
 
@@ -43,7 +44,7 @@ Pending applications
 <th></th>
 </tr>
 </thead>
-<tbody>
+<tbody id="Applications">
 {{
 foreach Reviewer in select * from FeaturedPeerReviewer where ApprovedForPublication=false do
 (

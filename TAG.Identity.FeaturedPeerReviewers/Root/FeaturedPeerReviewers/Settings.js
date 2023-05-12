@@ -67,10 +67,38 @@ function RemoveApplication(LegalId)
 	Tr.parentElement.removeChild(Tr);
 }
 
+function NewApplication(Reviewer)
+{
+	var Button1 = document.createElement("BUTTON");
+	Button1.className = "posButton";
+	Button1.innerText = "Accept";
+	Button1.setAttribute("type", "button");
+	Button1.setAttribute("onclick", "Accept('" + Reviewer.legalId + "')");
+
+	var Button2 = document.createElement("BUTTON");
+	Button2.className = "negButton";
+	Button2.innerText = "Reject";
+	Button2.setAttribute("type", "button");
+	Button2.setAttribute("onclick", "Reject('" + Reviewer.legalId + "')");
+
+	var TBody = document.getElementById("Applications");
+	AddRecord(Reviewer, TBody, Button1, Button2);
+}
+
 function AddFeaturedReviewer(Reviewer)
 {
-	var TBody = document.getElementById("FeaturedReviewers");
+	var Button = document.createElement("BUTTON");
+	Button.className = "negButton";
+	Button.innerText = "Delete";
+	Button.setAttribute("type", "button");
+	Button.setAttribute("onclick", "Delete('" + Reviewer.legalId + "')");
 
+	var TBody = document.getElementById("FeaturedReviewers");
+	AddRecord(Reviewer, TBody, null, Button);
+}
+
+function AddRecord(Reviewer, TBody, Button1, Button2)
+{
 	var Tr = document.createElement("TR");
 	Tr.setAttribute("id", Reviewer.legalId + "_1");
 	TBody.appendChild(Tr);
@@ -84,7 +112,7 @@ function AddFeaturedReviewer(Reviewer)
 	Td = document.createElement("TD");
 	Td.setAttribute("colspan", "5");
 	Td.innerHTML = "<a href='/ValidateLegalId.md?ID=" + Reviewer.legalId + "&Purpose=Reviewing%20application' target='_blank'><code>" +
-		Reviewer.legalId+"</code></a>";
+		Reviewer.legalId + "</code></a>";
 	Tr.appendChild(Td);
 
 	Td = document.createElement("TD");
@@ -98,6 +126,8 @@ function AddFeaturedReviewer(Reviewer)
 	Tr.appendChild(Td);
 
 	Td = document.createElement("TD");
+	if (Button1)
+		Td.appendChild(Button1);
 	Tr.appendChild(Td);
 
 	Tr = document.createElement("TR");
@@ -141,12 +171,13 @@ function AddFeaturedReviewer(Reviewer)
 	Tr.appendChild(Td);
 
 	Td = document.createElement("TD");
+	if (Button2)
+		Td.appendChild(Button2);
 	Tr.appendChild(Td);
+}
 
-	var Button = document.createElement("BUTTON");
-	Button.className = "negButton";
-	Button.innerText = "Delete";
-	Button.setAttribute("type", "button");
-	Button.setAttribute("onclick", "Delete('" + Reviewer.legalId + "')");
-	Td.appendChild(Button);
+function ApplicationUpdated(Reviewer)
+{
+	RemoveApplication(Reviewer.legalId);
+	NewApplication(Reviewer);
 }

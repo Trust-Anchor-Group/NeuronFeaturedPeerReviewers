@@ -126,7 +126,7 @@ function SignatureReceivedBE(Empty)
 			else if (xhttp.status === 406)
 				window.location.reload();
 			else
-				window.alert(xhttp.responseText + " (" + xhttp.status + ")");
+				window.alert(xhttp.responseText);
 
 			delete xhttp;
 		}
@@ -140,7 +140,10 @@ function SignatureReceivedBE(Empty)
 
 function ApplicationPrepared(Div,Application)
 {
+	Div.setAttribute("data-legalId", Application.legalId);
+
 	var TBody = AddTable(Div, "Featured Peer Review application");
+	TBody.setAttribute("data-legalId", Application.legalId);
 
 	AddRow(TBody, "ID", Application.legalId, true);
 	AddRow(TBody, "ID State", Application.state, true);
@@ -280,6 +283,16 @@ function DeleteApplication()
 	xhttp.setRequestHeader("Content-Type", "text/plain");
 	xhttp.setRequestHeader("Accept", "application/json");
 	xhttp.send("");
+}
+
+function ApplicationUpdated(LegalId)
+{
+	var Div = document.getElementById("quickLoginCode");
+	if (!Div)
+		Div = document.getElementById("CurrentApplication");
+
+	if (Div.getAttribute("data-legalId") == LegalId)
+		window.location.reload();
 }
 
 var LoginTimer = window.setTimeout(function () { DisplayQuickLogin(); }, 100);

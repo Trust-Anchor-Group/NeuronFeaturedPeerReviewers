@@ -53,10 +53,53 @@ if exists(QuickLoginUser.Id) then
 
         UpdateObject(Application);
 
+		EventData:=
+		{
+			"legalId": Application.LegalId,
+			"provider": Application.Provider,
+			"state": Application.State,
+			"created": Application.Created,
+			"updated": Application.Updated,
+			"from": Application.From,
+			"to": Application.To,
+			"approvedForPublication": Application.ApprovedForPublication,
+			"fullName": Application.FullName,
+			"useCountry": Application.UseCountry,
+			"useRegion": Application.UseRegion,
+			"useCity": Application.UseCity,
+			"useArea": Application.UseArea,
+			"useZip": Application.UseZip,
+			"useAddress": Application.UseAddress,
+			"country": Application.Country,
+			"region": Application.Region,
+			"city": Application.City,
+			"area": Application.Area,
+			"zip": Application.Zip,
+			"address": Application.Address,
+			"eMail": Application.EMail,
+			"phoneNumber": Application.PhoneNumber,
+			"jid": Application.Jid,
+			"photo": PhotoUrl,
+			"photoContentType": Application.PhotoContentType,
+			"photoWidth": Application.PhotoWidth,
+			"photoHeight": Application.PhotoHeight,
+			"description": Application.Description
+		};
+
+		TabIDs:=GetTabIDs("/FeaturedPeerReviewers/Settings.md");
+		foreach TabID in TabIDs do
+		(
+			TabInfo:=GetTabInformation(TabID);
+			if exists(TabInfo.Session.User) and TabInfo.Session.User.HasPrivilege("Admin.Identity.FeaturedPeerReviewers") then
+				PushEvent(TabID,"ApplicationUpdated",EventData)
+		);
+
         SeeOther("Apply.md");
     );
 
     ]]
+<div id="CurrentApplication" data-legalId="((Application.LegalId))">
+
 | Featured Peer Review application                                                   ||
 |:-------------|:---------------------------------------------------------------------|
 | ID           | `((Application.LegalId))`                                            |
@@ -80,6 +123,8 @@ if exists(QuickLoginUser.Id) then
 | Description  | <input type='text' id='Description' name='Description' value='((HtmlValueEncode(Application.Description) ))'((Disabled))/> |
 | <div style='text-align:center'><img src='/FeaturedPeerReviewers/Images/((Application.LegalId)).webp' alt='Photo' width='((Application.PhotoWidth))' height='((Application.PhotoHeight))' /></div> ||
 | <div style='text-align:center'><button type='submit' class='posButton'((Disabled))>Update</button> <button type='button' class='negButton' onclick='DeleteApplication()'>Delete</button></div> ||
+
+</div>
 [[
 )
 else

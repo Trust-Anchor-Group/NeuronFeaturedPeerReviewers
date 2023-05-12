@@ -78,6 +78,7 @@ LogInformation("Application for featured peer reviewer received.",
 	"Description": Application.Description
 });
 
+Result:=
 {
 	"legalId": Application.LegalId,
 	"provider": Application.Provider,
@@ -108,4 +109,14 @@ LogInformation("Application for featured peer reviewer received.",
 	"photoWidth": Application.PhotoWidth,
 	"photoHeight": Application.PhotoHeight,
 	"description": Application.Description
-}
+};
+
+TabIDs:=GetTabIDs("/FeaturedPeerReviewers/Settings.md");
+foreach TabID in TabIDs do
+(
+	TabInfo:=GetTabInformation(TabID);
+	if exists(TabInfo.Session.User) and TabInfo.Session.User.HasPrivilege("Admin.Identity.FeaturedPeerReviewers") then
+		PushEvent(TabID,"NewApplication",Result)
+);
+
+Result

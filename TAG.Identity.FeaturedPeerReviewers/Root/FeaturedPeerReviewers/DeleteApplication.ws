@@ -30,4 +30,12 @@ LogInformation("Application for featured peer reviewer deleted by applicant.",
 
 QuickLoginUser:=null;
 
+TabIDs:=GetTabIDs("/FeaturedPeerReviewers/Settings.md");
+foreach TabID in TabIDs do
+(
+	TabInfo:=GetTabInformation(TabID);
+	if exists(TabInfo.Session.User) and TabInfo.Session.User.HasPrivilege("Admin.Identity.FeaturedPeerReviewers") then
+		PushEvent(TabID,"RemoveApplication",Application.LegalId)
+);
+
 true
