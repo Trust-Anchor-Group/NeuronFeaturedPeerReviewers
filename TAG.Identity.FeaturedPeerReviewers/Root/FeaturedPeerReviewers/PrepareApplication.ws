@@ -58,6 +58,26 @@ Waher.IoTGateway.Gateway.SendNotification("New [application for featured peer re
 	 Waher.IoTGateway.Gateway.GetUrl("/FeaturedPeerReviewers/Settings.md")+") received from **"+
 	 Application.FullName+"**, **"+Application.Description+"**.");
 
+LogInformation("Application for featured peer reviewer received.",
+{
+	"Object":Application.LegalId,
+	"Actor":User.UserName,
+	"LegalId": Application.LegalId,
+	"Provider": Application.Provider,
+	"State": Application.State,
+	"FullName": Application.FullName,
+	"Country": Application.Country,
+	"Region": Application.Region,
+	"City": Application.City,
+	"Area": Application.Area,
+	"Zip": Application.Zip,
+	"Address": Application.Address,
+	"EMail": Application.EMail,
+	"PhoneNumber": Application.PhoneNumber,
+	"Jid": Application.Jid,
+	"Description": Application.Description
+});
+
 {
 	"legalId": Application.LegalId,
 	"provider": Application.Provider,

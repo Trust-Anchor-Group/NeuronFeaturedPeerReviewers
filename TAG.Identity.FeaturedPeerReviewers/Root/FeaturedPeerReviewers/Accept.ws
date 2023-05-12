@@ -7,6 +7,26 @@ if !exists(Application) then NotFound("Application not found.");
 Application.ApprovedForPublication:=true;
 UpdateObject(Application);
 
+LogInformation("Application for featured peer reviewer accepted.",
+{
+	"Object":Application.LegalId,
+	"Actor":User.UserName,
+	"LegalId": Application.LegalId,
+	"Provider": Application.Provider,
+	"State": Application.State,
+	"FullName": Application.FullName,
+	"Country": Application.Country,
+	"Region": Application.Region,
+	"City": Application.City,
+	"Area": Application.Area,
+	"Zip": Application.Zip,
+	"Address": Application.Address,
+	"EMail": Application.EMail,
+	"PhoneNumber": Application.PhoneNumber,
+	"Jid": Application.Jid,
+	"Description": Application.Description
+});
+
 {
 	"legalId": Application.LegalId,
 	"provider": Application.Provider,

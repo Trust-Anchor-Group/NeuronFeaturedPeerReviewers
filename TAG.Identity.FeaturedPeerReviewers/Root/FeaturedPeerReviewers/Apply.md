@@ -68,7 +68,7 @@ if exists(QuickLoginUser.Id) then
 | From         | ((Application.From))                                                 |
 | To           | ((Application.To))                                                   |
 | Full Name    | ((Application.FullName))                                             |
-| Country      | <input type='checkbox' id='UseCountry' name='UseCountry'((Application.UseCountry?" checked":""))((Disabled:=Application.ApprovedForPublication ? " disabled='disabled'" : ""))><label for='UseCountry'>Only review applications for ((Application.Country))</label> |
+| Country      | <input type='checkbox' id='UseCountry' name='UseCountry'((Application.UseCountry?" checked":""))((Disabled:=Application.ApprovedForPublication ? " disabled='disabled' readonly='readonly'" : ""))><label for='UseCountry'>Only review applications for ((Application.Country))</label> |
 | Region       | <input type='checkbox' id='UseRegion' name='UseRegion'((Application.UseRegion?" checked":""))((Disabled))><label for='UseRegion'>Only review applications for ((Application.Region))</label> |
 | City         | <input type='checkbox' id='UseCity' name='UseCity'((Application.UseCity?" checked":""))((Disabled))><label for='UseCity'>Only review applications for ((Application.City))</label> |
 | Area         | <input type='checkbox' id='UseArea' name='UseArea'((Application.UseArea?" checked":""))((Disabled))><label for='UseArea'>Only review applications for ((Application.Area))</label> |
@@ -77,7 +77,7 @@ if exists(QuickLoginUser.Id) then
 | e-Mail       | ((Application.EMail))                                                |
 | Phone Number | ((Application.PhoneNumber))                                          |
 | JID          | ((Application.Jid))                                                  |
-| Description  | <input type='text' id='Description' name='Description' value='((HtmlValueEncode(Application.Description) ))'/> |
+| Description  | <input type='text' id='Description' name='Description' value='((HtmlValueEncode(Application.Description) ))'((Disabled))/> |
 | <div style='text-align:center'><img src='/FeaturedPeerReviewers/Images/((Application.LegalId)).webp' alt='Photo' width='((Application.PhotoWidth))' height='((Application.PhotoHeight))' /></div> ||
 | <div style='text-align:center'><button type='submit' class='posButton'((Disabled))>Update</button> <button type='button' class='negButton' onclick='DeleteApplication()'>Delete</button></div> ||
 [[
