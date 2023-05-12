@@ -45,7 +45,7 @@ if !Gateway.HttpServer.TryGetFileName(PhotoUrl,false,FileName) then
 
 Folder:=System.IO.Path.GetDirectoryName(FileName);
 if !System.IO.Directory.Exists(Folder) then
-	System.IO.Directory.Create(Folder);
+	System.IO.Directory.CreateDirectory(Folder);
 
 Application.PhotoFileName:=FileName;
 Application.PhotoContentType:=SaveFile(Avatar,FileName);
