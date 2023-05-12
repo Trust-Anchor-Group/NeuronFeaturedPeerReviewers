@@ -144,9 +144,10 @@ function ApplicationPrepared(Div,Application)
 {
 	var TBody = AddTable(Div, "Featured Peer Review application");
 
-	AddRow(TBody, "Id", Application.legalId, true);
+	AddRow(TBody, "ID", Application.legalId, true);
+	AddRow(TBody, "ID State", Application.state, true);
 	AddRow(TBody, "Provider", Application.provider, true);
-	AddRow(TBody, "State", Application.state, true);
+	AddRow(TBody, "Application", Application.approvedForPublication ? "Featured" : "Not Featured", true);
 	AddRow(TBody, "Created", new Date(1000 * Application.created), false);
 
 	if (Application.updated)
@@ -169,6 +170,17 @@ function ApplicationPrepared(Div,Application)
 	TBody.appendChild(Tr);
 
 	var Td = document.createElement("TD");
+	Tr.appendChild(Td);
+	Td.innerText = "Description";
+
+	Td = document.createElement("TD");
+	Tr.appendChild(Td);
+	Td.innerHTML = "<input type='text' id='Description' name='Description' value='" + Application.description + "'/>";
+
+	Tr = document.createElement("TR");
+	TBody.appendChild(Tr);
+
+	Td = document.createElement("TD");
 	Td.setAttribute("colspan", "2");
 	Td.setAttribute("style", "text-align:center");
 	Tr.appendChild(Td);

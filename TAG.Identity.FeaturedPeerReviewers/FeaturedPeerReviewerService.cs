@@ -12,6 +12,7 @@ namespace TAG.Identity.FeaturedPeerReviewers
 	{
 		private readonly FeaturedPeerReviewer reviewer;
 		private readonly IPeerReviewServiceProvider provider;
+		private readonly string name;
 
 		/// <summary>
 		/// Peer reviewer service.
@@ -22,6 +23,10 @@ namespace TAG.Identity.FeaturedPeerReviewers
 		{
 			this.reviewer = Reviewer;
 			this.provider = Provider;
+
+			this.name = this.reviewer.FullName;
+			if (!string.IsNullOrEmpty(this.reviewer.Description))
+				this.name += ", " + this.reviewer.Description;
 		}
 
 		/// <summary>
@@ -32,7 +37,7 @@ namespace TAG.Identity.FeaturedPeerReviewers
 		/// <summary>
 		/// Name of service
 		/// </summary>
-		public string Name => this.reviewer.FullName;
+		public string Name => this.name;
 
 		/// <summary>
 		/// Icon for service.

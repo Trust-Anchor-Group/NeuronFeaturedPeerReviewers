@@ -41,7 +41,7 @@ if exists(QuickLoginUser.Id) then
         SeeOther("Apply.md")
     );
 
-    if exists(Posted) then
+    if exists(Posted) and !Application.ApprovedForPublication then
     (
         Application.UseCountry:=Boolean(Posted.UseCountry ?? false);
         Application.UseRegion:=Boolean(Posted.UseRegion ?? false);
@@ -49,32 +49,35 @@ if exists(QuickLoginUser.Id) then
         Application.UseArea:=Boolean(Posted.UseArea ?? false);
         Application.UseZip:=Boolean(Posted.UseZip ?? false);
         Application.UseAddress:=Boolean(Posted.UseAddress ?? false);
+        Application.Description:=Posted.Description;
 
         UpdateObject(Application)
     );
 
     ]]
-| Featured Peer Review application          ||
-|:-------------|:----------------------------|
-| Id           | `((Application.LegalId))`   |
-| Provider     | `((Application.Provider))`  |
-| State        | `((Application.State))`     |
-| Created      | ((Application.Created))     |
-| Updated      | ((Application.Updated))     |
-| From         | ((Application.From))        |
-| To           | ((Application.To))          |
-| Full Name    | ((Application.FullName))    |
-| Country      | <input type='checkbox' id='UseCountry' name='UseCountry'((Application.UseCountry?" checked":""))><label for='UseCountry'>Only review applications for ((Application.Country))</label> |
-| Region       | <input type='checkbox' id='UseRegion' name='UseRegion'((Application.UseRegion?" checked":""))><label for='UseRegion'>Only review applications for ((Application.Region))</label> |
-| City         | <input type='checkbox' id='UseCity' name='UseCity'((Application.UseCity?" checked":""))><label for='UseCity'>Only review applications for ((Application.City))</label> |
-| Area         | <input type='checkbox' id='UseArea' name='UseArea'((Application.UseArea?" checked":""))><label for='UseArea'>Only review applications for ((Application.Area))</label> |
-| Postal Code  | <input type='checkbox' id='UseZip' name='UseZip'((Application.UseZip?" checked":""))><label for='UseZip'>Only review applications for ((Application.Zip))</label> |
-| Address      | <input type='checkbox' id='UseAddress' name='UseAddress'((Application.UseAddress?" checked":""))><label for='UseAddress'>Only review applications for ((Application.Address))</label> |
-| e-Mail       | ((Application.EMail))       |
-| Phone Number | ((Application.PhoneNumber)) |
-| JID          | ((Application.Jid))         |
+| Featured Peer Review application                                                   ||
+|:-------------|:---------------------------------------------------------------------|
+| ID           | `((Application.LegalId))`                                            |
+| ID State     | `((Application.State))`                                              |
+| Provider     | `((Application.Provider))`                                           |
+| Application  | ((Application.ApprovedForPublication ? "Featured" : "Not Featured")) |
+| Created      | ((Application.Created))                                              |
+| Updated      | ((Application.Updated))                                              |
+| From         | ((Application.From))                                                 |
+| To           | ((Application.To))                                                   |
+| Full Name    | ((Application.FullName))                                             |
+| Country      | <input type='checkbox' id='UseCountry' name='UseCountry'((Application.UseCountry?" checked":""))((Disabled:=Application.ApprovedForPublication ? " disabled='disabled'" : ""))><label for='UseCountry'>Only review applications for ((Application.Country))</label> |
+| Region       | <input type='checkbox' id='UseRegion' name='UseRegion'((Application.UseRegion?" checked":""))((Disabled))><label for='UseRegion'>Only review applications for ((Application.Region))</label> |
+| City         | <input type='checkbox' id='UseCity' name='UseCity'((Application.UseCity?" checked":""))((Disabled))><label for='UseCity'>Only review applications for ((Application.City))</label> |
+| Area         | <input type='checkbox' id='UseArea' name='UseArea'((Application.UseArea?" checked":""))((Disabled))><label for='UseArea'>Only review applications for ((Application.Area))</label> |
+| Postal Code  | <input type='checkbox' id='UseZip' name='UseZip'((Application.UseZip?" checked":""))((Disabled))><label for='UseZip'>Only review applications for ((Application.Zip))</label> |
+| Address      | <input type='checkbox' id='UseAddress' name='UseAddress'((Application.UseAddress?" checked":""))((Disabled))><label for='UseAddress'>Only review applications for ((Application.Address))</label> |
+| e-Mail       | ((Application.EMail))                                                |
+| Phone Number | ((Application.PhoneNumber))                                          |
+| JID          | ((Application.Jid))                                                  |
+| Description  | <input type='text' id='Description' name='Description' value='((HtmlValueEncode(Application.Description) ))'/> |
 | <div style='text-align:center'><img src='/FeaturedPeerReviewers/Images/((Application.LegalId)).webp' alt='Photo' width='((Application.PhotoWidth))' height='((Application.PhotoHeight))' /></div> ||
-| <div style='text-align:center'><button type='submit' class='posButton'>Update</button> <button type='button' class='negButton' onclick='DeleteApplication()'>Delete</button></div> ||
+| <div style='text-align:center'><button type='submit' class='posButton'((Disabled))>Update</button> <button type='button' class='negButton' onclick='DeleteApplication()'>Delete</button></div> ||
 [[
 )
 else

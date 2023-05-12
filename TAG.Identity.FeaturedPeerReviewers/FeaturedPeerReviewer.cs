@@ -164,5 +164,10 @@ namespace TAG.Identity.FeaturedPeerReviewers
 		/// XMPP Address to reviewer
 		/// </summary>
 		public CaseInsensitiveString Jid { get; set; }
+
+		/// <summary>
+		/// Textual description presented to users.
+		/// </summary>
+		public string Description { get; set; }
 	}
 }

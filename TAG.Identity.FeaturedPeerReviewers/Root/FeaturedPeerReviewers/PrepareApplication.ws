@@ -81,5 +81,6 @@ SaveNewObject(Application);
 	"photo": PhotoUrl,
 	"photoContentType": Application.PhotoContentType,
 	"photoWidth": Application.PhotoWidth,
-	"photoHeight": Application.PhotoHeight
+	"photoHeight": Application.PhotoHeight,
+	"description": Application.Description
 }
