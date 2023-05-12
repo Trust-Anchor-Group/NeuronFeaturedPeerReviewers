@@ -15,9 +15,9 @@ namespace TAG.Identity.FeaturedPeerReviewers
 	/// </summary>
 	public class FeaturedPeerReviewersProvider : IPeerReviewServiceProvider, IConfigurableModule
 	{
-		private readonly MultiReadSingleWriteObject synchObj = new MultiReadSingleWriteObject();
-		private readonly Dictionary<CaseInsensitiveString, FeaturedPeerReviewer> peerReviewers = new Dictionary<CaseInsensitiveString, FeaturedPeerReviewer>();
-		private bool loaded = false;
+		private static readonly MultiReadSingleWriteObject synchObj = new MultiReadSingleWriteObject();
+		private static readonly Dictionary<CaseInsensitiveString, FeaturedPeerReviewer> peerReviewers = new Dictionary<CaseInsensitiveString, FeaturedPeerReviewer>();
+		private static bool loaded = false;
 
 		/// <summary>
 		/// Service publishing featured peer reviewers.
@@ -64,14 +64,14 @@ namespace TAG.Identity.FeaturedPeerReviewers
 		/// </summary>
 		public async Task Stop()
 		{
-			await this.synchObj.BeginWrite();
+			await synchObj.BeginWrite();
 			try
 			{
-				this.peerReviewers.Clear();
+				peerReviewers.Clear();
 			}
 			finally
 			{
-				await this.synchObj.EndWrite();
+				await synchObj.EndWrite();
 			}
 		}
 
@@ -95,19 +95,19 @@ namespace TAG.Identity.FeaturedPeerReviewers
 		/// <returns>Service reference.</returns>
 		public async Task<IPeerReviewService> GetServiceForPeerReview(string ServiceId, KeyValuePair<string, object>[] Identity)
 		{
-			await this.CheckLoaded();
+			await CheckLoaded();
 
-			await this.synchObj.BeginRead();
+			await synchObj.BeginRead();
 			try
 			{
-				if (this.peerReviewers.TryGetValue(ServiceId, out FeaturedPeerReviewer Reviewer))
+				if (peerReviewers.TryGetValue(ServiceId, out FeaturedPeerReviewer Reviewer))
 					return new FeaturedPeerReviewerService(Reviewer, this);
 				else
 					return null;
 			}
 			finally
 			{
-				await this.synchObj.EndRead();
+				await synchObj.EndRead();
 			}
 		}
 
@@ -118,20 +118,20 @@ namespace TAG.Identity.FeaturedPeerReviewers
 		/// <returns>Featured peer reviewers that can review the current application.</returns>
 		public async Task<IPeerReviewService[]> GetServicesForPeerReview(KeyValuePair<string, object>[] Identity)
 		{
-			await this.CheckLoaded();
+			await CheckLoaded();
 
 			Dictionary<CaseInsensitiveString, object> Application = new Dictionary<CaseInsensitiveString, object>();
 
 			foreach (KeyValuePair<string, object> P in Identity)
 				Application[P.Key] = P.Value;
 
-			await this.synchObj.BeginRead();
+			await synchObj.BeginRead();
 			try
 			{
 				List<IPeerReviewService> Services = new List<IPeerReviewService>();
 				DateTime Now = DateTime.Now;
 
-				foreach (FeaturedPeerReviewer Reviewer in this.peerReviewers.Values)
+				foreach (FeaturedPeerReviewer Reviewer in peerReviewers.Values)
 				{
 					if (!Reviewer.ApprovedForPublication ||
 						Reviewer.State != Waher.Networking.XMPP.Contracts.IdentityState.Approved ||
@@ -141,41 +141,23 @@ namespace TAG.Identity.FeaturedPeerReviewers
 						continue;
 					}
 
-					if (!CaseInsensitiveString.IsNullOrEmpty(Reviewer.Country) &&
-						!IsMatch("COUNTRY", Reviewer.Country, Application))
-					{
+					if (Reviewer.UseCountry && !IsMatch("COUNTRY", Reviewer.Country, Application))
 						continue;
-					}
 
-					if (!CaseInsensitiveString.IsNullOrEmpty(Reviewer.Region) &&
-						!IsMatch("REGION", Reviewer.Region, Application))
-					{
+					if (Reviewer.UseRegion && !IsMatch("REGION", Reviewer.Region, Application))
 						continue;
-					}
 
-					if (!CaseInsensitiveString.IsNullOrEmpty(Reviewer.City) &&
-						!IsMatch("CITY", Reviewer.City, Application))
-					{
+					if (Reviewer.UseCity && !IsMatch("CITY", Reviewer.City, Application))
 						continue;
-					}
 
-					if (!CaseInsensitiveString.IsNullOrEmpty(Reviewer.Area) &&
-						!IsMatch("AREA", Reviewer.Area, Application))
-					{
+					if (Reviewer.UseArea && !IsMatch("AREA", Reviewer.Area, Application))
 						continue;
-					}
 
-					if (!CaseInsensitiveString.IsNullOrEmpty(Reviewer.Zip) &&
-						!IsMatch("ZIP", Reviewer.Zip, Application))
-					{
+					if (Reviewer.UseZip && !IsMatch("ZIP", Reviewer.Zip, Application))
 						continue;
-					}
 
-					if (!CaseInsensitiveString.IsNullOrEmpty(Reviewer.Address) &&
-						!BeginsWith("ADDR", Reviewer.Address, Application))
-					{
+					if (Reviewer.UseAddress && !BeginsWith("ADDR", Reviewer.Address, Application))
 						continue;
-					}
 
 					Services.Add(new FeaturedPeerReviewerService(Reviewer, this));
 				}
@@ -184,7 +166,7 @@ namespace TAG.Identity.FeaturedPeerReviewers
 			}
 			finally
 			{
-				await this.synchObj.EndRead();
+				await synchObj.EndRead();
 			}
 		}
 
@@ -254,35 +236,71 @@ namespace TAG.Identity.FeaturedPeerReviewers
 			return sb.ToString().Normalize(NormalizationForm.FormC);
 		}
 
-		private async Task CheckLoaded()
+		private static async Task CheckLoaded()
 		{
-			await this.synchObj.BeginRead();
+			await synchObj.BeginRead();
 			try
 			{
-				if (this.loaded)
+				if (loaded)
 					return;
 			}
 			finally
 			{
-				await this.synchObj.EndRead();
+				await synchObj.EndRead();
 			}
 
-			await this.synchObj.BeginWrite();
+			await synchObj.BeginWrite();
 			try
 			{
-				if (this.loaded)
+				if (loaded)
 					return;
 
-				this.peerReviewers.Clear();
+				peerReviewers.Clear();
 
 				foreach (FeaturedPeerReviewer Reviewer in await Database.Find<FeaturedPeerReviewer>())
-					this.peerReviewers[Reviewer.LegalId] = Reviewer;
+					peerReviewers[Reviewer.LegalId] = Reviewer;
 
-				this.loaded = true;
+				loaded = true;
 			}
 			finally
 			{
-				await this.synchObj.BeginWrite();
+				await synchObj.EndWrite();
+			}
+		}
+
+		/// <summary>
+		/// Method called when an application has been created or updated.
+		/// </summary>
+		/// <param name="Application">Application</param>
+		public static async Task ApplicationUpdated(FeaturedPeerReviewer Application)
+		{
+			await synchObj.BeginWrite();
+			try
+			{
+				if (loaded)
+					peerReviewers[Application.LegalId] = Application;
+			}
+			finally
+			{
+				await synchObj.EndWrite();
+			}
+		}
+
+		/// <summary>
+		/// Method called when an application has been deleted.
+		/// </summary>
+		/// <param name="LegalId">Legal ID</param>
+		public static async Task ApplicationDeleted(CaseInsensitiveString LegalId)
+		{
+			await synchObj.BeginWrite();
+			try
+			{
+				if (loaded)
+					peerReviewers.Remove(LegalId);
+			}
+			finally
+			{
+				await synchObj.EndWrite();
 			}
 		}
 	}
