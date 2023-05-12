@@ -42,7 +42,7 @@ namespace TAG.Identity.FeaturedPeerReviewers
 		/// <summary>
 		/// Icon for service.
 		/// </summary>
-		public string IconUrl => Gateway.GetUrl(this.reviewer.PhotoFileName);
+		public string IconUrl => Gateway.GetUrl("/FeaturedPeerReviewers/Images/" + this.reviewer.LegalId + ".webp");
 
 		/// <summary>
 		/// Icon width for service.
