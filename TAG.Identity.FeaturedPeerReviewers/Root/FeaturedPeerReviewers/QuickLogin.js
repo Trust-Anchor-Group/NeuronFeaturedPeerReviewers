@@ -149,13 +149,13 @@ function ApplicationPrepared(Div,Application)
 	AddRow(TBody, "ID State", Application.state, true);
 	AddRow(TBody, "Provider", Application.provider, true);
 	AddRow(TBody, "Application", Application.approvedForPublication ? "Featured" : "Not Featured", true);
-	AddRow(TBody, "Created", new Date(1000 * Application.created), false);
+	AddRow(TBody, "Created", Application.created, false);
 
 	if (Application.updated)
-		AddRow(TBody, "Updated", new Date(1000 * Application.updated), false);
+		AddRow(TBody, "Updated", Application.updated, false);
 
-	AddRow(TBody, "From", new Date(1000 * Application.from), false);
-	AddRow(TBody, "To", new Date(1000 * Application.to), false);
+	AddRow(TBody, "From", Application.from, false);
+	AddRow(TBody, "To", Application.to, false);
 	AddRow(TBody, "Full Name", Application.fullName, false);
 	AddCheckbox(AddRow(TBody, "Country", Application.country, false), Application.useCountry, "UseCountry");
 	AddCheckbox(AddRow(TBody, "Region", Application.region, false), Application.useRegion, "UseRegion");
