@@ -42,8 +42,8 @@ install the package using the following information:
 
 | Package information                                                                                                              ||
 |:-----------------|:---------------------------------------------------------------------------------------------------------------|
-| Package          | `TAG.Identity.FeaturedPeerReviewers.package`                                                                   |
-| Installation key | TBD                                                                                                            |
+| Package          | `TAG.FeaturedPeerReviewers.package`                                                                            |
+| Installation key | `m0/GQmwDNjrgw6DhQ95vb03csO//N/NNrY/LdEzEem11KdA9AVv95BxAr8qzUoex8rTZiNDiXp+A00ce5b3f3a389168c51cee7bdf9cb182` |
 | More Information | TBD                                                                                                            |
 
 ## Building, Compiling & Debugging
