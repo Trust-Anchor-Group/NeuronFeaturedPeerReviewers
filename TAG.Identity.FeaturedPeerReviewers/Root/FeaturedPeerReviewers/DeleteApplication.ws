@@ -39,4 +39,8 @@ foreach TabID in TabIDs do
 		PushEvent(TabID,"RemoveApplication",Application.LegalId)
 );
 
+ApplicationUrl:=Waher.IoTGateway.Gateway.GetUrl("/FeaturedPeerReviewers/Apply.md");
+SendFormattedMessage(Application.Jid,"Your application to become featured peer reviewer on *"+
+	Waher.IoTGateway.Gateway.Domain+"* has been deleted. If you want, you can [apply]("+ApplicationUrl+") again.");
+
 true
