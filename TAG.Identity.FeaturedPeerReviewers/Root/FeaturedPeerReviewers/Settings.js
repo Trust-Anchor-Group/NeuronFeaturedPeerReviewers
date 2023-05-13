@@ -33,10 +33,15 @@ function Delete(LegalId)
 	if (!window.confirm("Are you sure you want to delete the featured reviewer?"))
 		return;
 
-	Reject(LegalId);
+	RejectOrDelete(LegalId,false);
 }
 
 function Reject(LegalId)
+{
+	RejectOrDelete(LegalId, true);
+}
+
+function RejectOrDelete(LegalId,IsReject)
 {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function ()
@@ -53,9 +58,13 @@ function Reject(LegalId)
 	};
 
 	xhttp.open("POST", "Reject.ws", true);
-	xhttp.setRequestHeader("Content-Type", "text/plain");
+	xhttp.setRequestHeader("Content-Type", "application/json");
 	xhttp.setRequestHeader("Accept", "application/json");
-	xhttp.send(LegalId);
+	xhttp.send(JSON.stringify(
+		{
+			"legalId": LegalId,
+			"isReject": IsReject
+		}));
 }
 
 function RemoveApplication(LegalId)

@@ -1,7 +1,12 @@
 ﻿AuthenticateSession(Request,"User");
 Authorize(User,"Admin.Identity.FeaturedPeerReviewers");
 
-Application:=select top 1 * from TAG.Identity.FeaturedPeerReviewers.FeaturedPeerReviewer where LegalId=Posted;
+{
+	"legalId": Required(Str(PLegalId)),
+	"isReject": Required(Bool(PIsReject))
+}:=Posted;
+
+Application:=select top 1 * from TAG.Identity.FeaturedPeerReviewers.FeaturedPeerReviewer where LegalId=PLegalId;
 if !exists(Application) then NotFound("Application not found.");
 
 DeleteObject(Application);
@@ -33,8 +38,18 @@ LogInformation("Application for featured peer reviewer rejected.",
 PushEvent("/FeaturedPeerReviewers/Apply.md","ApplicationUpdated",Application.LegalId);
 
 ApplicationUrl:=Waher.IoTGateway.Gateway.GetUrl("/FeaturedPeerReviewers/Apply.md");
-Message:="Your application to become featured peer reviewer on *"+
-	Waher.IoTGateway.Gateway.Domain+"* has been rejected. If you want, you can [apply]("+ApplicationUrl+") again.";
+
+if PIsReject then
+(
+	Message:="Your application to become featured peer reviewer on *"+
+		Waher.IoTGateway.Gateway.Domain+"* has been rejected. If you want, you can [apply]("+ApplicationUrl+") again."
+)
+else
+(
+	Message:="Your application to become featured peer reviewer on *"+
+		Waher.IoTGateway.Gateway.Domain+"* has been deleted. If you want, you can [apply]("+ApplicationUrl+") again."
+);
+
 if !empty(Application.Jid) then SendFormattedMessage(Application.Jid,Message);
 if !empty(Application.EMail) then SendMail(Application.EMail,"Application rejected.",Message);
 
