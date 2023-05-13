@@ -55,7 +55,7 @@ PushEvent("/FeaturedPeerReviewers/Apply.md","ApplicationUpdated",Application.Leg
 	"eMail": Application.EMail,
 	"phoneNumber": Application.PhoneNumber,
 	"jid": Application.Jid,
-	"photo": PhotoUrl,
+	"photo": "/FeaturedPeerReviewers/Images/"+Application.LegalId+".webp",
 	"photoContentType": Application.PhotoContentType,
 	"photoWidth": Application.PhotoWidth,
 	"photoHeight": Application.PhotoHeight,
