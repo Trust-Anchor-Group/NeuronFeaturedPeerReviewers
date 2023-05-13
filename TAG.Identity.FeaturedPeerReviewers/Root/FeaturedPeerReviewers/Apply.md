@@ -52,7 +52,7 @@ if exists(QuickLoginUser.Id) then
         Application.Description:=Posted.Description;
 
         UpdateObject(Application);
-		TAG.Identity.FeaturedPeerReviewers.ApplicationUpdated(Application);
+		TAG.Identity.FeaturedPeerReviewers.FeaturedPeerReviewersProvider.ApplicationUpdated(Application);
 
 		EventData:=
 		{
