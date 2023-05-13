@@ -30,6 +30,10 @@ LogInformation("Application for featured peer reviewer accepted.",
 
 PushEvent("/FeaturedPeerReviewers/Apply.md","ApplicationUpdated",Application.LegalId);
 
+ApplicationUrl:=Waher.IoTGateway.Gateway.GetUrl("/FeaturedPeerReviewers/Apply.md");
+SendFormattedMessage(Application.Jid,"Your [application]("+ApplicationUrl+") to become featured peer reviewer on *"+
+	Waher.IoTGateway.Gateway.Domain+"* has been accepted.");
+
 {
 	"legalId": Application.LegalId,
 	"provider": Application.Provider,

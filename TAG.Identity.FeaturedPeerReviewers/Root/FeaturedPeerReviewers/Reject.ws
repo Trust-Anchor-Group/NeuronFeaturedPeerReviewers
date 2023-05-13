@@ -32,4 +32,8 @@ LogInformation("Application for featured peer reviewer rejected.",
 
 PushEvent("/FeaturedPeerReviewers/Apply.md","ApplicationUpdated",Application.LegalId);
 
+ApplicationUrl:=Waher.IoTGateway.Gateway.GetUrl("/FeaturedPeerReviewers/Apply.md");
+SendFormattedMessage(Application.Jid,"Your application to become featured peer reviewer on *"+
+	Waher.IoTGateway.Gateway.Domain+"* has been rejected. If you want, you can [apply]("+ApplicationUrl+") again.");
+
 true;
