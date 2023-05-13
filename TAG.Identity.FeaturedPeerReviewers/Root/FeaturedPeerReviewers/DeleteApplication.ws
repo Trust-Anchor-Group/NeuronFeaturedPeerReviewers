@@ -40,7 +40,9 @@ foreach TabID in TabIDs do
 );
 
 ApplicationUrl:=Waher.IoTGateway.Gateway.GetUrl("/FeaturedPeerReviewers/Apply.md");
-SendFormattedMessage(Application.Jid,"Your application to become featured peer reviewer on *"+
-	Waher.IoTGateway.Gateway.Domain+"* has been deleted. If you want, you can [apply]("+ApplicationUrl+") again.");
+Message:="Your application to become featured peer reviewer on *"+
+	Waher.IoTGateway.Gateway.Domain+"* has been deleted. If you want, you can [apply]("+ApplicationUrl+") again.";
+if !empty(Application.Jid) then SendFormattedMessage(Application.Jid,Message);
+if !empty(Application.EMail) then SendMail(Application.EMail,"Application deleted.",Message);
 
 true
