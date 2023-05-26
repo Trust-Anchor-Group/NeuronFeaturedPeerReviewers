@@ -152,6 +152,54 @@ namespace TAG.Identity.FeaturedPeerReviewers
 		public CaseInsensitiveString Address { get; set; }
 
 		/// <summary>
+		/// Organization Name
+		/// </summary>
+		[DefaultValueStringEmpty]
+		public CaseInsensitiveString OrgName { get; set; }
+
+		/// <summary>
+		/// Organization Number
+		/// </summary>
+		[DefaultValueStringEmpty]
+		public CaseInsensitiveString OrgNr { get; set; }
+
+		/// <summary>
+		/// Organization Country limitation of reviewer
+		/// </summary>
+		[DefaultValueStringEmpty]
+		public CaseInsensitiveString OrgCountry { get; set; }
+
+		/// <summary>
+		/// Organization Region limitation of reviewer
+		/// </summary>
+		[DefaultValueStringEmpty]
+		public CaseInsensitiveString OrgRegion { get; set; }
+
+		/// <summary>
+		/// Organization City limitation of reviewer
+		/// </summary>
+		[DefaultValueStringEmpty]
+		public CaseInsensitiveString OrgCity { get; set; }
+
+		/// <summary>
+		/// Organization Area limitation of reviewer
+		/// </summary>
+		[DefaultValueStringEmpty]
+		public CaseInsensitiveString OrgArea { get; set; }
+
+		/// <summary>
+		/// Organization Zip limitation of reviewer
+		/// </summary>
+		[DefaultValueStringEmpty]
+		public CaseInsensitiveString OrgZip { get; set; }
+
+		/// <summary>
+		/// Organization Address limitation of reviewer
+		/// </summary>
+		[DefaultValueStringEmpty]
+		public CaseInsensitiveString OrgAddress { get; set; }
+
+		/// <summary>
 		/// E-mail to reviewer
 		/// </summary>
 		public CaseInsensitiveString EMail { get; set; }

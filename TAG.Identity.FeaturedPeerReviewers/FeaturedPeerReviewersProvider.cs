@@ -121,9 +121,29 @@ namespace TAG.Identity.FeaturedPeerReviewers
 			await CheckLoaded();
 
 			Dictionary<CaseInsensitiveString, object> Application = new Dictionary<CaseInsensitiveString, object>();
+			bool HasOrg = false;
 
 			foreach (KeyValuePair<string, object> P in Identity)
+			{
 				Application[P.Key] = P.Value;
+
+				switch (P.Key.ToUpper())
+				{
+					case "ORGNAME":
+					case "ORGDEPT":
+					case "ORGROLE":
+					case "ORGNR":
+					case "ORGADDR":
+					case "ORGADDR2":
+					case "ORGZIP":
+					case "ORGAREA":
+					case "ORGCITY":
+					case "ORGREGION":
+					case "ORGCOUNTRY":
+						HasOrg = true;
+						break;
+				}
+			}
 
 			await synchObj.BeginRead();
 			try
@@ -158,6 +178,33 @@ namespace TAG.Identity.FeaturedPeerReviewers
 
 					if (Reviewer.UseAddress && !BeginsWith("ADDR", Reviewer.Address, Application))
 						continue;
+
+					if (HasOrg)
+					{
+						if (!IsMatch("ORGNAME", Reviewer.OrgName, Application))
+							continue;
+
+						if (!IsMatch("ORGNR", Reviewer.OrgNr, Application))
+							continue;
+
+						if (Reviewer.UseCountry && !IsMatch("ORGCOUNTRY", Reviewer.OrgCountry, Application))
+							continue;
+
+						if (Reviewer.UseRegion && !IsMatch("ORGREGION", Reviewer.OrgRegion, Application))
+							continue;
+
+						if (Reviewer.UseCity && !IsMatch("ORGCITY", Reviewer.OrgCity, Application))
+							continue;
+
+						if (Reviewer.UseArea && !IsMatch("ORGAREA", Reviewer.OrgArea, Application))
+							continue;
+
+						if (Reviewer.UseZip && !IsMatch("ORGZIP", Reviewer.OrgZip, Application))
+							continue;
+
+						if (Reviewer.UseAddress && !BeginsWith("ORGADDR", Reviewer.OrgAddress, Application))
+							continue;
+					}
 
 					Services.Add(new FeaturedPeerReviewerService(Reviewer, this));
 				}

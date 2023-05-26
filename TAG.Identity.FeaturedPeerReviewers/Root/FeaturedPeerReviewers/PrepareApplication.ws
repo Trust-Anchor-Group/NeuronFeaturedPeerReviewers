@@ -24,6 +24,14 @@ Application.City:=(QuickLoginUser.Properties.CITY ??? "");
 Application.Area:=(QuickLoginUser.Properties.AREA ??? "");
 Application.Zip:=(QuickLoginUser.Properties.ZIP ??? "");
 Application.Address:=(QuickLoginUser.Properties.ADDR ??? "");
+Application.OrgName:=(QuickLoginUser.Properties.ORGNAME ??? "");
+Application.OrgNr:=(QuickLoginUser.Properties.ORGNR ??? "");
+Application.OrgCountry:=(QuickLoginUser.Properties.ORGCOUNTRY ??? "");
+Application.OrgRegion:=(QuickLoginUser.Properties.ORGREGION ??? "");
+Application.OrgCity:=(QuickLoginUser.Properties.ORGCITY ??? "");
+Application.OrgArea:=(QuickLoginUser.Properties.ORGAREA ??? "");
+Application.OrgZip:=(QuickLoginUser.Properties.ORGZIP ??? "");
+Application.OrgAddress:=(QuickLoginUser.Properties.ORGADDR ??? "");
 Application.UseCountry:=!empty(Application.Country);
 Application.UseRegion:=!empty(Application.Region);
 Application.UseCity:=!empty(Application.City);
@@ -73,6 +81,14 @@ LogInformation("Application for featured peer reviewer received.",
 	"Area": Application.Area,
 	"Zip": Application.Zip,
 	"Address": Application.Address,
+	"OrgName": Application.OrgName,
+	"OrgNr": Application.OrgNr,
+	"OrgCountry": Application.OrgCountry,
+	"OrgRegion": Application.OrgRegion,
+	"OrgCity": Application.OrgCity,
+	"OrgArea": Application.OrgArea,
+	"OrgZip": Application.OrgZip,
+	"OrgAddress": Application.OrgAddress,
 	"EMail": Application.EMail,
 	"PhoneNumber": Application.PhoneNumber,
 	"Jid": Application.Jid,
@@ -102,6 +118,14 @@ Result:=
 	"area": Application.Area,
 	"zip": Application.Zip,
 	"address": Application.Address,
+	"orgName": Application.OrgName,
+	"orgNr": Application.OrgNr,
+	"orgCountry": Application.OrgCountry,
+	"orgRegion": Application.OrgRegion,
+	"orgCity": Application.OrgCity,
+	"orgArea": Application.OrgArea,
+	"orgZip": Application.OrgZip,
+	"orgAddress": Application.OrgAddress,
 	"eMail": Application.EMail,
 	"phoneNumber": Application.PhoneNumber,
 	"jid": Application.Jid,
