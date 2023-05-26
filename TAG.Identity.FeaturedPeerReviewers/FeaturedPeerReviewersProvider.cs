@@ -263,6 +263,9 @@ namespace TAG.Identity.FeaturedPeerReviewers
 		/// <returns>String with diacritics removed</returns>
 		public static string RemoveDiacritics(string s)
 		{
+			if (s is null)
+				return string.Empty;
+
 			string FormD = s.Normalize(NormalizationForm.FormD);    // Diacritics become special characters
 			StringBuilder sb = new StringBuilder();
 
