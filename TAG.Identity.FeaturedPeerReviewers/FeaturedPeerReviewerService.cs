@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Waher.IoTGateway;
 using Waher.Networking.XMPP.Contracts;
+using Waher.Networking.XMPP.Contracts.EventArguments;
 
 namespace TAG.Identity.FeaturedPeerReviewers
 {
