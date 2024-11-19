@@ -1,5 +1,6 @@
 ﻿using Paiwise;
 using System.Threading.Tasks;
+using Waher.Events;
 using Waher.IoTGateway;
 using Waher.Networking.XMPP.Contracts;
 using Waher.Networking.XMPP.Contracts.EventArguments;
@@ -78,7 +79,7 @@ namespace TAG.Identity.FeaturedPeerReviewers
 		/// <param name="State">State object to pass on to callback method.</param>
 		/// <returns>Authentication result.</returns>
 		public Task<IAuthenticationResult> IsValid(SignaturePetitionEventArgs PeerReivewRequest,
-			ClientUrlEventHandler ClientUrlCallback, object State)
+			EventHandlerAsync<ClientUrlEventArgs> ClientUrlCallback, object State)
 		{
 			return Task.FromResult<IAuthenticationResult>(new AuthenticationResult(ErrorType.Client, 
 				"Peer reviewer is external. Peer-review request should be sent directly to reviewer.", "en", string.Empty));
