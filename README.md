@@ -9,7 +9,7 @@ The solution contains the following C# projects:
 
 | Project                              | Framework         | Description |
 |:-------------------------------------|:------------------|:------------|
-| `TAG.Identity.FeaturedPeerReviewers` | .NET Standard 2.0 | Service module for the [TAG Neuron](https://lab.tagroot.io/Documentation/Index.md), permitting configuration of featured peer-reviewers, to simplify onboarding of TAG ID users. |
+| `TAG.Identity.FeaturedPeerReviewers` | .NET Standard 2.1 | Service module for the [TAG Neuron](https://lab.tagroot.io/Documentation/Index.md), permitting configuration of featured peer-reviewers, to simplify onboarding of TAG ID users. |
 
 ## Nugets
 
