@@ -126,7 +126,7 @@ function SignatureReceivedBE(Empty)
 			else if (xhttp.status === 406)
 				window.location.reload();
 			else
-				window.alert(xhttp.responseText);
+				Popup.Alert(xhttp.responseText);
 
 			delete xhttp;
 		}
@@ -262,9 +262,9 @@ function AddCheckbox(Td, Checked, Name)
 	Td.innerHTML = s;
 }
 
-function DeleteApplication()
+async function DeleteApplication()
 {
-	if (!window.confirm("Are you sure you want to delete your application?"))
+	if (!(await Popup.Confirm("Are you sure you want to delete your application?")))
 		return;
 
 	var xhttp = new XMLHttpRequest();

@@ -16,7 +16,7 @@ function Accept(LegalId)
 				AddFeaturedReviewer(JSON.parse(xhttp.responseText));
 			}
 			else
-				window.alert(xhttp.responseText);
+				Popup.Alert(xhttp.responseText);
 
 			delete xhttp;
 		}
@@ -28,9 +28,9 @@ function Accept(LegalId)
 	xhttp.send(LegalId);
 }
 
-function Delete(LegalId)
+async function Delete(LegalId)
 {
-	if (!window.confirm("Are you sure you want to delete the featured reviewer?"))
+	if (!(await Popup.Confirm("Are you sure you want to delete the featured reviewer?")))
 		return;
 
 	RejectOrDelete(LegalId,false);
@@ -51,7 +51,7 @@ function RejectOrDelete(LegalId,IsReject)
 			if (xhttp.status === 200)
 				RemoveApplication(LegalId);
 			else
-				window.alert(xhttp.responseText);
+				Popup.Alert(xhttp.responseText);
 
 			delete xhttp;
 		}
