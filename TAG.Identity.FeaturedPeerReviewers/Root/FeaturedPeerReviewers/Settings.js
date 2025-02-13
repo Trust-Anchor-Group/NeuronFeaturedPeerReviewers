@@ -16,7 +16,7 @@ function Accept(LegalId)
 				AddFeaturedReviewer(JSON.parse(xhttp.responseText));
 			}
 			else
-				Popup.Alert(xhttp.responseText);
+				Popup.Alert(xhttp.responseText); // await is not needed
 
 			delete xhttp;
 		}
@@ -51,7 +51,7 @@ function RejectOrDelete(LegalId,IsReject)
 			if (xhttp.status === 200)
 				RemoveApplication(LegalId);
 			else
-				Popup.Alert(xhttp.responseText);
+				Popup.Alert(xhttp.responseText); // await is not needed
 
 			delete xhttp;
 		}

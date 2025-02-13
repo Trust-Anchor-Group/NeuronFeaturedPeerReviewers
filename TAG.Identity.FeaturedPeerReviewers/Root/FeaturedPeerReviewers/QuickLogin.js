@@ -126,7 +126,7 @@ function SignatureReceivedBE(Empty)
 			else if (xhttp.status === 406)
 				window.location.reload();
 			else
-				Popup.Alert(xhttp.responseText);
+				Popup.Alert(xhttp.responseText); // await is not needed
 
 			delete xhttp;
 		}
