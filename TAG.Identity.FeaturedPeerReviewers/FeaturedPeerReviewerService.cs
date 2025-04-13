@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Waher.Events;
 using Waher.IoTGateway;
-using Waher.Networking.XMPP.Contracts;
 using Waher.Networking.XMPP.Contracts.EventArguments;
 
 namespace TAG.Identity.FeaturedPeerReviewers
@@ -72,17 +71,18 @@ namespace TAG.Identity.FeaturedPeerReviewers
 		public IPeerReviewServiceProvider PeerReviewServiceProvider => this.provider;
 
 		/// <summary>
-		/// Is called for internal peer reviewers.
+		/// Checks the veracity of identity claims.
 		/// </summary>
-		/// <param name="PeerReivewRequest">Peer review request.</param>
-		/// <param name="ClientUrlCallback">Callback method used to send an URL to the client.</param>
-		/// <param name="State">State object to pass on to callback method.</param>
-		/// <returns>Authentication result.</returns>
-		public Task<IAuthenticationResult> IsValid(SignaturePetitionEventArgs PeerReivewRequest,
+		/// <param name="Application">Identity application.</param>
+		/// <param name="ClientUrlCallback">Client-side URL that needs to be opened to complete the validation process.</param>
+		/// <param name="State">State object passed on in calls to the callback method.</param>
+		public Task Validate(IIdentityReviewApplication Application,
 			EventHandlerAsync<ClientUrlEventArgs> ClientUrlCallback, object State)
 		{
-			return Task.FromResult<IAuthenticationResult>(new AuthenticationResult(ErrorType.Client, 
-				"Peer reviewer is external. Peer-review request should be sent directly to reviewer.", "en", string.Empty));
+			Application.ReportError("Peer reviewer is external. Peer-review request should be sent directly to reviewer.",
+				"en", "ReviewerExternal", ValidationErrorType.Client, this);
+
+			return Task.CompletedTask;
 		}
 	}
 }
