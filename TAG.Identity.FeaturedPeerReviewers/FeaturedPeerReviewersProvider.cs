@@ -1,12 +1,19 @@
 ﻿using Paiwise;
+using Paiwise.Functions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Waher.IoTGateway;
 using Waher.Persistence;
+using Waher.Runtime.Collections;
+using Waher.Runtime.Inventory;
 using Waher.Runtime.Threading;
+using Waher.Script.Constants;
+using Waher.Script.Graphs.Canvas2D.Operations;
 
 namespace TAG.Identity.FeaturedPeerReviewers
 {
@@ -85,6 +92,168 @@ namespace TAG.Identity.FeaturedPeerReviewers
 			{
 				new ConfigurablePage("Featured Peer Reviewers", "/FeaturedPeerReviewers/Settings.md", "Admin.Identity.FeaturedPeerReviewers")
 			});
+		}
+
+		/// <summary>
+		/// Required properties for the identity authenticator service.
+		/// </summary>
+		public string[] RequiredProperties => GetPeerReviewProperties(true);
+
+		/// <summary>
+		/// Optional properties for the identity authenticator service.
+		/// </summary>
+		public string[] OptionalProperties => GetPeerReviewProperties(false);
+
+		/// <summary>
+		/// Required attachments for the identity authenticator service.
+		/// </summary>
+		public string[] RequiredAttachments => GetPeerReviewAttachments(true);
+
+		/// <summary>
+		/// Optional attachments for the identity authenticator service.
+		/// </summary>
+		public string[] OptionalAttachments => GetPeerReviewAttachments(false);
+
+		private static bool TryGetPeerReviewConfiguration(out Type T, out object Instance)
+		{
+			T = Types.GetType("Waher.Service.IoTBroker.Setup.PeerReviewConfiguration");
+			Instance = null;
+
+			if (T is null)
+				return false;
+
+			PropertyInfo PI = T.GetProperty("Instance", BindingFlags.Static | BindingFlags.Public);
+			if (PI is null)
+				return false;
+
+			Instance = PI.GetValue(null);
+
+			PI = T.GetProperty("AllowPeerReview", BindingFlags.Instance | BindingFlags.Public);
+			if (PI is null)
+				return false;
+
+			bool AllowPeerReview = (bool)PI.GetValue(Instance);
+			if (!AllowPeerReview)
+				return false;
+
+			return true;
+		}
+
+		private static string[] GetPeerReviewProperties(bool Required)
+		{
+			if (!TryGetPeerReviewConfiguration(out Type T, out object Instance))
+				return Array.Empty<string>();
+
+			ChunkedList<string> Result = new ChunkedList<string>();
+
+			foreach (KeyValuePair<string, string> P in PropertyNames)
+			{
+				PropertyInfo PI = T.GetProperty(P.Key, BindingFlags.Instance | BindingFlags.Public);
+				if (PI is null)
+					continue;
+
+				bool Value = PI.GetValue(Instance) is bool b && b;
+
+				switch (P.Value)
+				{
+					case PersonalInformation.AddressTag:
+						if (Value)
+						{
+							if (Required)
+								Result.Add(PersonalInformation.AddressTag);
+							else
+								Result.Add(PersonalInformation.Address2Tag);
+						}
+						else if (!Required)
+						{
+							Result.Add(PersonalInformation.AddressTag);
+							Result.Add(PersonalInformation.Address2Tag);
+						}
+						break;
+
+					case PersonalInformation.BirthDayTag:
+						if (!(Value ^ Required))
+						{
+							Result.Add(PersonalInformation.BirthDayTag);
+							Result.Add(PersonalInformation.BirthMonthTag);
+							Result.Add(PersonalInformation.BirthYearTag);
+						}
+						break;
+
+					default:
+						if (!(Value ^ Required))
+							Result.Add(P.Value);
+						break;
+				}
+			}
+
+			return Result.ToArray();
+		}
+
+		private static readonly Dictionary<string, string> PropertyNames = new Dictionary<string, string>()
+		{
+			{ "RequireFirstName", PersonalInformation.FirstNameTag },
+			{ "RequireMiddleName", PersonalInformation.MiddleNamesTag },
+			{ "RequireLastName", PersonalInformation.LastNamesTag },
+			{ "RequirePersonalNumber", PersonalInformation.PersonalNumberTag },
+			{ "RequireCountry", PersonalInformation.CountryTag },
+			{ "RequireRegion", PersonalInformation.RegionTag },
+			{ "RequireCity", PersonalInformation.CityTag },
+			{ "RequireArea", PersonalInformation.AreaTag },
+			{ "RequirePostalCode", PersonalInformation.PostalCodeTag },
+			{ "RequireAddress", PersonalInformation.AddressTag },
+			{ "RequireNationality", PersonalInformation.NationalityTag },
+			{ "RequireGender", PersonalInformation.GenderTag },
+			{ "RequireBirthDate", PersonalInformation.BirthDayTag }
+		};
+
+		private static string[] GetPeerReviewAttachments(bool Required)
+		{
+			if (!TryGetPeerReviewConfiguration(out Type T, out object Instance))
+				return Array.Empty<string>();
+
+			PropertyInfo PI = T.GetProperty("NrPhotosRequired", BindingFlags.Instance | BindingFlags.Public);
+
+			int NrPhotosRequired = PI?.GetValue(Instance) is int i ? i : 0;
+
+			if (NrPhotosRequired == 0)
+			{
+				if (Required)
+					return Array.Empty<string>();
+				else
+				{
+					return new string[]
+					{
+						"ProfilePhoto",
+						"IdCardFront",
+						"IdCardBack",
+						"Passport",
+						"DriverLicenseFront",
+						"DriverLicenseBack"
+					};
+				}
+			}
+			else 
+			{
+				if (Required)
+				{
+					return new string[]
+					{
+						"ProfilePhoto"
+					};
+				}
+				else
+				{
+					return new string[]
+					{
+						"IdCardFront",
+						"IdCardBack",
+						"Passport",
+						"DriverLicenseFront",
+						"DriverLicenseBack"
+					};
+				}
+			}
 		}
 
 		/// <summary>
