@@ -1,6 +1,7 @@
 ﻿using System;
 using Waher.Persistence;
 using Waher.Persistence.Attributes;
+using Waher.Security;
 
 namespace TAG.Identity.FeaturedPeerReviewers
 {
@@ -39,7 +40,7 @@ namespace TAG.Identity.FeaturedPeerReviewers
 		/// <summary>
 		/// State of identity, at time of application.
 		/// </summary>
-		public Waher.Networking.XMPP.Contracts.IdentityState State { get; set; }
+		public IdentityState State { get; set; }
 
 		/// <summary>
 		/// When ID was created

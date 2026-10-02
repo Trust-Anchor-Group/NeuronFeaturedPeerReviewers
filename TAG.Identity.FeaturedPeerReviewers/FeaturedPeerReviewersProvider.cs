@@ -1,8 +1,6 @@
 ﻿using Paiwise;
-using Paiwise.Functions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
@@ -12,8 +10,7 @@ using Waher.Persistence;
 using Waher.Runtime.Collections;
 using Waher.Runtime.Inventory;
 using Waher.Runtime.Threading;
-using Waher.Script.Constants;
-using Waher.Script.Graphs.Canvas2D.Operations;
+using Waher.Security;
 
 namespace TAG.Identity.FeaturedPeerReviewers
 {
@@ -323,7 +320,7 @@ namespace TAG.Identity.FeaturedPeerReviewers
 				foreach (FeaturedPeerReviewer Reviewer in peerReviewers.Values)
 				{
 					if (!Reviewer.ApprovedForPublication ||
-						Reviewer.State != Waher.Networking.XMPP.Contracts.IdentityState.Approved ||
+						Reviewer.State != IdentityState.Approved ||
 						Reviewer.From > Now ||
 						Reviewer.To < Now)
 					{
